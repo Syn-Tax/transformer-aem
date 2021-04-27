@@ -1,0 +1,4 @@
+tika
+pandas
+simpletransformers
+sklearn
