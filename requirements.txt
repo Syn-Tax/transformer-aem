@@ -2,3 +2,4 @@ tika
 pandas
 simpletransformers
 sklearn
+docx2txt
