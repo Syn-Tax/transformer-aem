@@ -24,7 +24,7 @@ eval_df = pd.DataFrame(eval_data)
 eval_df.columns = ["text", "labels"]
 
 # Optional model configuration
-model_args = ClassificationArgs(num_train_epochs=1)
+model_args = ClassificationArgs(num_train_epochs=1, no_save=True)
 
 # Create a ClassificationModel
 model = ClassificationModel(
