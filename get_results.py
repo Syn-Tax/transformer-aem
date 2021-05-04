@@ -19,7 +19,12 @@ wandb_config = {"epochs": 100, "train_batch_size": 4, "eval_batch_size": 4, "lr"
 df = pd.read_csv("data.csv")
 
 train_df = df.iloc[:wandb_config["samples"], :]
+
+train_df.columns = ["text", "labels"]
+
 eval_df = df.iloc[wandb_config["samples"]:, :]
+
+eval_df.columns = ["text", "labels"]
 
 model_args = ClassificationArgs()
 model_args.num_train_epochs = wandb_config["epochs"]
