@@ -1,6 +1,7 @@
 import pandas as pd
 from simpletransformers.classification import ClassificationArgs, ClassificationModel
 import logging
+import sklearn
 
 logging.basicConfig(level=logging.INFO)
 transformers_logger = logging.getLogger("transformers")
@@ -28,4 +29,4 @@ model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_lab
 
 model.train_model(train_df)
 
-result, model_outputs, wrong_predictions = model.eval_model(eval_df)
+result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error)
