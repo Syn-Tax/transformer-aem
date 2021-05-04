@@ -24,6 +24,7 @@ model_args.learning_rate = wandb_config["lr"]
 # model_args.max_seq_length = wandb_config["max_seq_length"]
 model_args.regression = True
 model_args.no_save = True
+model_args.overwrite_output_dir = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
