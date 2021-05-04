@@ -3,11 +3,11 @@ from simpletransformers.classification import ClassificationArgs, Classification
 import logging
 import sklearn
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
-wandb_config = {"epochs": 20, "train_batch_size": 4, "eval_batch_size": 4, "lr": 1e-4, "samples": 20, "max_seq_len": 256, "model": "roberta", "save": "roberta-base"}
+wandb_config = {"epochs": 20, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": 20, "max_seq_len": 256, "model": "roberta", "save": "roberta-base"}
 
 df = pd.read_csv("data.csv")
 
