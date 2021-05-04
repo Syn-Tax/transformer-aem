@@ -33,6 +33,6 @@ model_args.use_eval_cached_features = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
-model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error)
+model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error, mae=sklearn.metrics.mean_absolute_error)
 
 result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error)
