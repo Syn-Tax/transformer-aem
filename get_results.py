@@ -55,7 +55,7 @@ result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn
 file_exists = os.path.exists("results.txt")
 with open("results.csv", "a") as f:
     if not file_exists:
-        f.write("model,samples,"+",".join(result.keys))
+        f.write("model,samples,"+",".join(result.keys()))
 
     output = "{},{}".format(wandb_config["model"], wandb_config["samples"])
     for key in result.keys():
