@@ -3,7 +3,7 @@ from simpletransformers.classification import ClassificationArgs, Classification
 import logging
 import sklearn
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.ERROR)
 transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
