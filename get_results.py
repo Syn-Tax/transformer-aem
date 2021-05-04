@@ -26,6 +26,6 @@ model_args.no_save = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
-model.train(train_df)
+model.train(train_df, "test")
 
 result, model_outputs, wrong_predictions = model.eval_model(eval_df)
