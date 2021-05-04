@@ -42,9 +42,9 @@ model_args.use_eval_cached_features = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
-model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error, mae=sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score)
+model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error, mae=sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score, max=sklearn.metrics.max_error)
 
-result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score)
+result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score, max=sklearn.metrics.max_error)
 
 
 file_exists = os.path.exists("results.txt")
