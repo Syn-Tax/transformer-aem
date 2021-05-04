@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.ERROR)
 transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
-wandb_config = {"epochs": 20, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": 40, "max_seq_len": 256, "model": "roberta", "save": "roberta-base"}
+wandb_config = {"epochs": 500, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": 20, "max_seq_len": 256, "model": "roberta", "save": "roberta-base"}
 
 df = pd.read_csv("data.csv")
 
@@ -28,7 +28,7 @@ model_args.overwrite_output_dir = True
 model_args.logging_steps = 1
 model_args.evaluate_during_training = True
 model_args.evaluate_during_training_verbose = True
-model_args.evaluate_during_training_steps = 10
+model_args.evaluate_during_training_steps = 50
 model_args.use_eval_cached_features = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
