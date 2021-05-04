@@ -2,12 +2,19 @@ import pandas as pd
 from simpletransformers.classification import ClassificationArgs, ClassificationModel
 import logging
 import sklearn
+import numpy as np
+import os
+import sys
 
 logging.basicConfig(level=logging.ERROR)
 transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
-wandb_config = {"epochs": 500, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": 20, "max_seq_len": 256, "model": "roberta", "save": "roberta-base"}
+model_types = ["roberta", "bert", "albert", "xlm", "xlnet"]
+model_saves = ["roberta-base", "bert-base-cased", "albert-base-v2", "xlm-mlm-en-2048", "xlnet-base-cased"]
+sample_sizes = [10, 20, 30, 40, 50]
+
+wandb_config = {"epochs": 100, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": sample_sizes[int(sys.argv[1])], "max_seq_len": 512, "model": model_types[int(sys.argv[2])], "save": model_saves[int(sys.argv[2])]}
 
 df = pd.read_csv("data.csv")
 
@@ -19,7 +26,7 @@ model_args.num_train_epochs = wandb_config["epochs"]
 model_args.eval_batch_size = wandb_config["eval_batch_size"]
 model_args.train_batch_size = wandb_config["train_batch_size"]
 model_args.wandb_project = "transformer-aes"
-model_args.wandb_kwards = {"config": wandb_config}
+model_args.wandb_kwargs = {"config": wandb_config, "name": "{}-{}".format(wandb_config["model"], wandb_config["samples"]) }
 model_args.learning_rate = wandb_config["lr"]
 # model_args.max_seq_length = wandb_config["max_seq_length"]
 model_args.regression = True
@@ -28,11 +35,22 @@ model_args.overwrite_output_dir = True
 model_args.logging_steps = 1
 model_args.evaluate_during_training = True
 model_args.evaluate_during_training_verbose = True
-model_args.evaluate_during_training_steps = 50
+model_args.evaluate_during_training_steps = np.ceil((wandb_config["samples"]/wandb_config["train_batch_size"])*10)
 model_args.use_eval_cached_features = True
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
-model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error, mae=sklearn.metrics.mean_absolute_error)
+model.train_model(train_df, eval_df=eval_df, mse=sklearn.metrics.mean_squared_error, mae=sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score)
 
-result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error)
+result, model_outputs, wrong_predictions = model.eval_model(eval_df, mse=sklearn.metrics.mean_squared_error, mae = sklearn.metrics.mean_absolute_error, r2=sklearn.metrics.r2_score)
+
+
+file_exists = os.path.exists("results.txt")
+with open("results.csv", "a") as f:
+    if not file_exists:
+        f.write("model,samples,"+",".join(result.keys))
+
+    output = "{},{}".format(wandb_config["model"], wandb_config["samples"])
+    for key in result.keys():
+        output += ",{}".format(result[key])
+    f.write(output)
