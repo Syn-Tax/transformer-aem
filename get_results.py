@@ -1,5 +1,5 @@
 import pandas as pd
-from simpletransformers import ClassificationArgs, ClassificationModel
+from simpletransformers.classification import ClassificationArgs, ClassificationModel
 import logging
 
 logging.basicConfig(level=logging.INFO)
