@@ -25,6 +25,7 @@ model_args.learning_rate = wandb_config["lr"]
 model_args.regression = True
 model_args.no_save = True
 model_args.overwrite_output_dir = True
+model_args.logging_steps = 1
 
 model = ClassificationModel(wandb_config["model"], wandb_config["save"], num_labels=1, args=model_args)
 
