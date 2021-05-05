@@ -10,8 +10,8 @@ logging.basicConfig(level=logging.ERROR)
 transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
-model_types = ["roberta", "bert", "albert", "xlm", "xlnet"]
-model_saves = ["roberta-base", "bert-base-cased", "albert-base-v2", "xlm-mlm-en-2048", "xlnet-base-cased"]
+model_types = ["roberta", "bert", "albert", "xlmroberta", "longformer"]
+model_saves = ["roberta-base", "bert-base-cased", "albert-base-v2", "xlm-roberta-base", "allenai/longformer-base-4096"]
 sample_sizes = [10, 20, 30, 40, 50]
 
 wandb_config = {"epochs": 100, "train_batch_size": 4, "eval_batch_size": 4, "lr": 5e-5, "samples": sample_sizes[int(sys.argv[1])], "max_seq_len": 512, "model": model_types[int(sys.argv[2])], "save": model_saves[int(sys.argv[2])]}
